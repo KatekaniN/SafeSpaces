@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Spaces</title>
+    <link rel="stylesheet" href="panic_space.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4B3775;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 27px;
+            margin-right: auto;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f0f0f0;
+        }
+
+        .main-content {
+            text-align: center;
+            max-width: 800px;
+            /* Increased the width */
+            margin-top: 300px;
+            /* Adjusted for space between navbar */
+            padding: 40px;
+            /* Padding around content */
+            background-color: #fff;
+            /* White background for better readability */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h1 {
+            color: #4B3775
+        }
+
+        h1 {
+            top: 15px;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 18px;
+            /* Increased font size */
+            margin-bottom: 25px;
+            /* Increased spacing between paragraphs */
+            line-height: 1.6;
+            /* Improved readability with line spacing */
+        }
+
+        button {
+            background-color: #4B3775;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            /* Larger buttons */
+            font-size: 18px;
+            /* Increased font size */
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 20px;
+            /* Space between buttons */
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #614799;
+            transform: scale(1.05);
+            /* Button grows slightly when hovered */
+        }
+
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            /* Increased margin */
+        }
+
+        #waveCanvas {
+            display: block;
+            /* Initially hidden */
+            width: 100%;
+            height: 150px;
+            /* Adjust height as needed */
+            margin-top: 30px;
+            background-color: #614799;
+        }
+
+        .footer {
+            background-color: #4B3775;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+            /* Push the footer to the bottom */
+        }
+
+        .footer .container {
+            max-width: 800px;
+            margin: 0 auto;
+            /* Center content within the footer */
+        }
+
+        .footer-text {
+            font-size: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            /* Center links horizontally */
+        }
+
+        .footer-links li {
+            margin: 0 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                display: none;
+                /* Hide navigation links by default */
+                flex-direction: column;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-top: 5px;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 28px;
+                /* Slightly smaller on mobile */
+            }
+
+            p {
+                font-size: 16px;
+                /* Adjust font size for smaller screens */
+            }
+
+            button {
+                width: 100%;
+                /* Full width buttons on mobile */
+                margin-top: 10px;
+            }
+
+            /* Hamburger menu styles */
+            .hamburger {
+                display: block;
+                cursor: pointer;
+                margin-left: auto;
+            }
+
+            .hamburger .bar {
+                width: 25px;
+                height: 3px;
+                background-color: white;
+                margin: 5px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                padding: 20px;
+                background-color: #4B3775;
+            }
+
+            .nav-links.active li {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .main-content{
+                margin-top: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <img src="media/shield.png" alt="Logo" class="logo">
+        <div class="logo-text">Safe Spaces</div>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#Home" target="_parent">Home</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="account.html" target="_blank">Account</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1>Panic Space</h1>
+        <p>This feature allows you to quickly record audio evidence in case of an emergency. Press the button below to
+            start recording. Your audio will be saved securely for future use as evidence﹡</p>
+
+        <button id="recordBtn">Start Recording</button>
+        <button id="stopBtn" disabled>Stop Recording</button>
+        <audio id="audioPlayer" controls></audio>
+        <a id="downloadLink" style="display: none;">Downloaded Recording</a>
+
+        <canvas id="waveCanvas"></canvas>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            
+            <p class="footer-text"> *Your recordings will be stored on a secure server for as long as possible with
+                high-level encryption. Your
+                recordings are private and only accessible to you. In emergencies, this feature
+                provides a rapid way to
+                document events, ensuring your safety and rights are protected.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms and Conditions</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioContext;
+        let analyser;
+        let dataArray;
+        let bufferLength;
+        let source;
+        let animationId;
+
+        const recordBtn = document.getElementById('recordBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const downloadLink = document.getElementById('downloadLink');
+        const waveCanvas = document.getElementById('waveCanvas');
+        const canvasCtx = waveCanvas.getContext('2d');
+
+        waveCanvas.width = waveCanvas.offsetWidth;
+        waveCanvas.height = waveCanvas.offsetHeight;
+
+        function drawWave() {
+            animationId = requestAnimationFrame(drawWave);
+            canvasCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+            analyser.getByteTimeDomainData(dataArray);
+            canvasCtx.lineWidth = 2;
+            canvasCtx.strokeStyle = '#007bff';
+            canvasCtx.beginPath();
+
+            let sliceWidth = waveCanvas.width * 1.0 / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                let v = dataArray[i] / 128.0;
+                let y = v * waveCanvas.height / 2;
+
+                if (i === 0) {
+                    canvasCtx.moveTo(x, y);
+                } else {
+                    canvasCtx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            canvasCtx.lineTo(waveCanvas.width, waveCanvas.height / 2);
+            canvasCtx.stroke();
+        }
+
+        recordBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;
+                bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+
+                source = audioContext.createMediaStreamSource(stream);
+                source.connect(analyser);
+                drawWave();
+
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+
+                recordBtn.disabled = true;
+                stopBtn.disabled = false;
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+            } catch (err) {
+                console.error("Microphone access denied or error occurred:", err);
+                alert("Error accessing microphone: " + err.message);
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            mediaRecorder.stop();
+            stopBtn.disabled = true;
+            recordBtn.disabled = false;
+
+            cancelAnimationFrame(animationId);
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+
+                audioPlayer.src = audioUrl;
+                audioPlayer.load();
+
+                const audioFileName = `recording-${new Date().getTime()}.webm`;
+                downloadLink.href = audioUrl;
+                downloadLink.download = audioFileName;
+                downloadLink.style.display = 'block';
+                downloadLink.click();
+
+                audioChunks = [];
+            };
+        });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
